@@ -11,6 +11,7 @@ public struct FATBar: View {
     let searchPlaceholder: String
     @Binding var searchText: String
     @State private var isSearchVisible = false
+    @State private var searchBarOpacity: Double = 0
     
     private let buttonSize: CGFloat = 44
     private let wideButtonWidth: CGFloat = 88
@@ -42,17 +43,27 @@ public struct FATBar: View {
     
     public var body: some View {
         VStack(spacing: 12) {
-            // Search Bar
+            // Search Bar with optimized rendering
             if searchEnabled && isSearchVisible {
                 FATSearchBar(
                     text: $searchText,
                     placeholder: searchPlaceholder,
-                    isVisible: $isSearchVisible
+                    isVisible: $isSearchVisible,
+                    shouldFocus: searchBarOpacity > 0.9
                 )
-                .transition(.asymmetric(
-                    insertion: .scale(scale: 0.8).combined(with: .opacity),
-                    removal: .scale(scale: 0.8).combined(with: .opacity)
-                ))
+                .opacity(searchBarOpacity)
+                .scaleEffect(searchBarOpacity > 0.5 ? 1 : 0.9)
+                .onAppear {
+                    // Defer animation to next run loop
+                    DispatchQueue.main.async {
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            searchBarOpacity = 1
+                        }
+                    }
+                }
+                .onDisappear {
+                    searchBarOpacity = 0
+                }
             }
             
             // Action Buttons
@@ -60,14 +71,7 @@ public struct FATBar: View {
                 HStack(spacing: spacing) {
                     // Search Toggle Button
                     if searchEnabled {
-                        Button(action: {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                isSearchVisible.toggle()
-                                if !isSearchVisible {
-                                    searchText = ""
-                                }
-                            }
-                        }) {
+                        Button(action: toggleSearch) {
                             Image(systemName: isSearchVisible ? "xmark" : "magnifyingglass")
                                 .font(.system(size: 18, weight: .medium))
                                 .foregroundColor(.primary)
@@ -75,11 +79,13 @@ public struct FATBar: View {
                                 .background(Color(UIColor.secondarySystemBackground))
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
+                        .buttonStyle(ScaledButtonStyle())
                     }
                     
                     // Action Buttons
                     ForEach(actionButtons) { button in
                         FATActionButtonView(button: button)
+                            .buttonStyle(ScaledButtonStyle())
                     }
                 }
             }
@@ -90,8 +96,13 @@ public struct FATBar: View {
                     FATTabButton(
                         tab: tabs[index],
                         isSelected: selectedTab == index,
-                        action: { selectedTab = index }
+                        action: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                selectedTab = index
+                            }
+                        }
                     )
+                    .buttonStyle(ScaledButtonStyle())
                 }
             }
         }
@@ -104,5 +115,19 @@ public struct FATBar: View {
         )
         .padding(.horizontal, 20)
     }
+    
+    private func toggleSearch() {
+        if isSearchVisible {
+            // Clear search and hide immediately
+            searchText = ""
+            withAnimation(.easeIn(duration: 0.15)) {
+                isSearchVisible = false
+            }
+        } else {
+            // Show search bar
+            withAnimation(.easeOut(duration: 0.2)) {
+                isSearchVisible = true
+            }
+        }
+    }
 }
-

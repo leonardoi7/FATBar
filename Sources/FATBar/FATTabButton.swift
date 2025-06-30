@@ -12,6 +12,7 @@ struct FATTabButton: View {
                 Image(systemName: tab.icon)
                     .font(.system(size: 20, weight: isSelected ? .semibold : .medium))
                     .symbolVariant(isSelected ? .fill : .none)
+                    .animation(.easeInOut(duration: 0.2), value: isSelected)
                 
                 if isSelected {
                     Circle()
@@ -23,10 +24,10 @@ struct FATTabButton: View {
             .foregroundColor(isSelected ? .accentColor : .secondary)
             .frame(width: buttonSize, height: buttonSize)
             .background(
-                isSelected ? Color.accentColor.opacity(0.15) : Color.clear
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isSelected ? Color.accentColor.opacity(0.15) : Color.clear)
+                    .animation(.easeInOut(duration: 0.2), value: isSelected)
             )
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isSelected)
         }
     }
 }
