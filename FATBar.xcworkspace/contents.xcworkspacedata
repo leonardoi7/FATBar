@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Examples/FATBar-macOS/FATBar-macOS.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Examples/FATBar-iOS/FATBar-iOS.xcodeproj">
    </FileRef>
    <FileRef
