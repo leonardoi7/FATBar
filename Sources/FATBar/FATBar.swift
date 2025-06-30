@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - Public API
 
 /// A floating action tab bar that provides tab navigation with optional action buttons and search functionality.
-public struct FATBar<Content: View>: View {
+public struct FATBar: View {
     @Binding var selectedTab: Int
     let tabs: [FATTabItem]
     let actionButtons: [FATActionButton]
