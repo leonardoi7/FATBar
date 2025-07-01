@@ -168,9 +168,6 @@ Check out `FATBarExampleView` for a complete implementation example that demonst
 ## Requirements
 
 - iOS 15.0+
-- macOS 12.0+
-- tvOS 15.0+
-- watchOS 8.0+
 - Swift 5.5+
 
 ## Contributing
