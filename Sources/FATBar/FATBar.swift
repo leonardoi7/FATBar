@@ -107,7 +107,7 @@ public struct FATBar: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .glassEffect(.regular, in: .rect(cornerRadius: 24))
+            .modifier(MainContainerBackgroundModifier())
         }
         .padding(.horizontal, 20)
     }

@@ -39,6 +39,6 @@ struct FATSearchBar: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
-        .glassEffect(.regular, in: .rect(cornerRadius: 12))
+        .modifier(SearchBarBackgroundModifier())
     }
 }
