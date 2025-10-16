@@ -47,8 +47,13 @@ public struct FATBarExampleView: View {
     public var body: some View {
         ZStack {
             // Background
-            Color(UIColor.systemBackground)
+            #if os(iOS)
+            Color(uiColor: .systemBackground)
                 .ignoresSafeArea()
+            #else
+            Color.clear
+                .ignoresSafeArea()
+            #endif
             
             // Current Tab Content
             tabs[selectedTab].view
