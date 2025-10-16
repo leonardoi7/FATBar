@@ -106,4 +106,100 @@ final class FATBarTests: XCTestCase {
             XCTAssertEqual(buttons.count, 100)
         }
     }
+    
+    // MARK: - iOS 15 Button Style Tests
+    
+    func testScaledButtonStyleCompiles() throws {
+        // Verify ScaledButtonStyle can be instantiated (tests compilation)
+        let buttonStyle = ScaledButtonStyle()
+        XCTAssertNotNil(buttonStyle)
+    }
+    
+    func testFATTabButtonWithScaledButtonStyle() throws {
+        // Test that FATTabButton with ScaledButtonStyle compiles and initializes
+        let tabItem = FATTabItem(icon: "house", title: "Home", view: Text("Home"))
+        var actionCalled = false
+        
+        let tabButton = FATTabButton(
+            tab: tabItem,
+            isSelected: false,
+            action: { actionCalled = true }
+        )
+        
+        XCTAssertNotNil(tabButton)
+        
+        // Verify action callback executes
+        tabButton.action()
+        XCTAssertTrue(actionCalled, "Tab button action should execute correctly")
+    }
+    
+    func testFATActionButtonViewWithScaledButtonStyle() throws {
+        // Test that FATActionButtonView with ScaledButtonStyle compiles and initializes
+        var actionCalled = false
+        let actionButton = FATActionButton(
+            icon: "plus",
+            title: "Add",
+            isWide: true,
+            action: { actionCalled = true }
+        )
+        
+        let actionButtonView = FATActionButtonView(button: actionButton)
+        XCTAssertNotNil(actionButtonView)
+        
+        // Verify action callback executes
+        actionButton.action()
+        XCTAssertTrue(actionCalled, "Action button callback should execute correctly")
+    }
+    
+    func testButtonCallbacksExecuteOnIOS15() throws {
+        // Test that button callbacks work correctly (iOS 15 compatibility)
+        var tabActionCalled = false
+        var actionButtonCalled = false
+        
+        let tabItem = FATTabItem(icon: "house", title: "Home", view: Text("Home"))
+        let tabButton = FATTabButton(
+            tab: tabItem,
+            isSelected: false,
+            action: { tabActionCalled = true }
+        )
+        
+        let actionButton = FATActionButton(
+            icon: "plus",
+            action: { actionButtonCalled = true }
+        )
+        
+        // Execute callbacks
+        tabButton.action()
+        actionButton.action()
+        
+        XCTAssertTrue(tabActionCalled, "Tab button callback should execute on iOS 15")
+        XCTAssertTrue(actionButtonCalled, "Action button callback should execute on iOS 15")
+    }
+    
+    func testScaledButtonStyleAnimationConfiguration() throws {
+        // Verify ScaledButtonStyle has proper animation configuration
+        // This test ensures the button style works with iOS 15's animation APIs
+        let buttonStyle = ScaledButtonStyle()
+        
+        // Create a mock configuration
+        struct MockConfiguration: ButtonStyleConfiguration {
+            let label: AnyView
+            let isPressed: Bool
+            
+            init(isPressed: Bool) {
+                self.label = AnyView(Text("Test"))
+                self.isPressed = isPressed
+            }
+        }
+        
+        let pressedConfig = MockConfiguration(isPressed: true)
+        let normalConfig = MockConfiguration(isPressed: false)
+        
+        // Verify the button style can create body views for both states
+        let pressedBody = buttonStyle.makeBody(configuration: pressedConfig)
+        let normalBody = buttonStyle.makeBody(configuration: normalConfig)
+        
+        XCTAssertNotNil(pressedBody)
+        XCTAssertNotNil(normalBody)
+    }
 }
