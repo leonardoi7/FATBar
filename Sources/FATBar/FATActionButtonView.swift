@@ -28,8 +28,7 @@ struct FATActionButtonView: View {
                 width: button.isWide ? wideButtonWidth : buttonSize,
                 height: buttonSize
             )
-            .background(Color(UIColor.secondarySystemBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
         }
+        .buttonStyle(ScaledButtonStyle())
     }
 }

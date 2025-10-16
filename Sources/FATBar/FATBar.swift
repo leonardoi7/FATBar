@@ -53,6 +53,7 @@ public struct FATBar: View {
                 )
                 .opacity(searchBarOpacity)
                 .scaleEffect(searchBarOpacity > 0.5 ? 1 : 0.9)
+                .transition(.scale.combined(with: .opacity))
                 .onAppear {
                     // Defer animation to next run loop
                     DispatchQueue.main.async {
@@ -66,53 +67,48 @@ public struct FATBar: View {
                 }
             }
             
-            // Action Buttons
-            if !actionButtons.isEmpty || searchEnabled {
-                HStack(spacing: spacing) {
-                    // Search Toggle Button
-                    if searchEnabled {
-                        Button(action: toggleSearch) {
-                            Image(systemName: isSearchVisible ? "xmark" : "magnifyingglass")
-                                .font(.system(size: 18, weight: .medium))
-                                .foregroundColor(.primary)
-                                .frame(width: buttonSize, height: buttonSize)
-                                .background(Color(UIColor.secondarySystemBackground))
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                        }
-                        .buttonStyle(ScaledButtonStyle())
-                    }
-                    
-                    // Action Buttons
-                    ForEach(actionButtons) { button in
-                        FATActionButtonView(button: button)
-                            .buttonStyle(ScaledButtonStyle())
-                    }
-                }
-            }
-            
-            // Tab Bar
-            HStack(spacing: spacing) {
-                ForEach(tabs.indices, id: \.self) { index in
-                    FATTabButton(
-                        tab: tabs[index],
-                        isSelected: selectedTab == index,
-                        action: {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                selectedTab = index
+            // Unified Glass Container for Action Buttons and Tab Bar
+            VStack(spacing: 8) {
+                // Action Buttons
+                if !actionButtons.isEmpty || searchEnabled {
+                    HStack(spacing: spacing) {
+                        // Search Toggle Button
+                        if searchEnabled {
+                            Button(action: toggleSearch) {
+                                Image(systemName: isSearchVisible ? "xmark" : "magnifyingglass")
+                                    .font(.system(size: 18, weight: .medium))
+                                    .foregroundColor(.primary)
+                                    .frame(width: buttonSize, height: buttonSize)
                             }
+                            .buttonStyle(ScaledButtonStyle())
                         }
-                    )
-                    .buttonStyle(ScaledButtonStyle())
+                        
+                        // Action Buttons
+                        ForEach(actionButtons) { button in
+                            FATActionButtonView(button: button)
+                        }
+                    }
+                }
+                
+                // Tab Bar
+                HStack(spacing: spacing) {
+                    ForEach(tabs.indices, id: \.self) { index in
+                        FATTabButton(
+                            tab: tabs[index],
+                            isSelected: selectedTab == index,
+                            action: {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    selectedTab = index
+                                }
+                            }
+                        )
+                    }
                 }
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .glassEffect(.regular, in: .rect(cornerRadius: 24))
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background(
-            RoundedRectangle(cornerRadius: 24)
-                .fill(.ultraThinMaterial)
-                .shadow(color: .black.opacity(0.15), radius: 20, x: 0, y: 10)
-        )
         .padding(.horizontal, 20)
     }
     
