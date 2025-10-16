@@ -1,5 +1,8 @@
 import SwiftUI
 
+/// Action button component that works identically on iOS 15+ through iOS 26+.
+/// Uses standard SwiftUI components that are available across all supported iOS versions.
+/// Button interactions and animations work consistently on all platforms.
 struct FATActionButtonView: View {
     let button: FATActionButton
     private let buttonSize: CGFloat = 44

@@ -1,5 +1,8 @@
 import SwiftUI
 
+/// Tab button component that works identically on iOS 15+ through iOS 26+.
+/// Uses standard SwiftUI components that are available across all supported iOS versions.
+/// Visual feedback (scaling, color changes) works consistently on all platforms.
 struct FATTabButton: View {
     let tab: FATTabItem
     let isSelected: Bool

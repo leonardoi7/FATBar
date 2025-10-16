@@ -5,11 +5,14 @@ import PackageDescription
 
 let package = Package(
     name: "FATBar",
+    // Minimum platform versions for backward compatibility
+    // iOS 15+: Enables broad device support while maintaining modern SwiftUI features
+    // Liquid Glass effects automatically activate on iOS 26+ via runtime version detection
     platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
-        .tvOS(.v15),
-        .watchOS(.v8)
+        .iOS(.v15),      // iOS 15.0+ for backward compatibility
+        .macOS(.v12),    // macOS 12.0+ (Monterey)
+        .tvOS(.v15),     // tvOS 15.0+
+        .watchOS(.v8)    // watchOS 8.0+
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.

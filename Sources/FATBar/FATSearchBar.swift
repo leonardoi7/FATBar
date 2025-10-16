@@ -1,5 +1,9 @@
 import SwiftUI
 
+/// Search bar component with version-aware background styling.
+/// Background is applied via SearchBarBackgroundModifier which automatically selects:
+/// - iOS 26+: Liquid Glass effect
+/// - iOS 15-18: ultraThinMaterial fallback
 struct FATSearchBar: View {
     @Binding var text: String
     let placeholder: String
@@ -39,6 +43,7 @@ struct FATSearchBar: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
+        // Version-aware background: Liquid Glass on iOS 26+, ultraThinMaterial on iOS 15-18
         .modifier(SearchBarBackgroundModifier())
     }
 }

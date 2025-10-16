@@ -3,6 +3,13 @@ import SwiftUI
 // MARK: - Public API
 
 /// A floating action tab bar that provides tab navigation with optional action buttons and search functionality.
+///
+/// FATBar supports iOS 15+ with automatic version detection:
+/// - iOS 26+: Uses Liquid Glass effects for premium visual appearance
+/// - iOS 15-18: Uses ultraThinMaterial fallback for polished blur effects
+///
+/// Version detection happens automatically at runtime via ViewModifiers, requiring no conditional
+/// code in your app. The public API remains identical across all iOS versions.
 public struct FATBar: View {
     @Binding var selectedTab: Int
     let tabs: [FATTabItem]
@@ -67,7 +74,8 @@ public struct FATBar: View {
                 }
             }
             
-            // Unified Glass Container for Action Buttons and Tab Bar
+            // Unified Container for Action Buttons and Tab Bar
+            // Background is applied via MainContainerBackgroundModifier which handles version detection
             VStack(spacing: 8) {
                 // Action Buttons
                 if !actionButtons.isEmpty || searchEnabled {
@@ -109,6 +117,7 @@ public struct FATBar: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
+            // Version-aware background: Liquid Glass on iOS 26+, ultraThinMaterial on iOS 15-18
             .modifier(MainContainerBackgroundModifier())
         }
         .padding(.horizontal, 20)
