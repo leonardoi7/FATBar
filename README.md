@@ -4,12 +4,13 @@ A customizable floating action tab bar for SwiftUI that combines tab navigation 
 
 ## Features
 
-- 🚀 **Floating Design**: Beautiful glassmorphism effect with shadow
+- 🚀 **Liquid Glass Effects**: Dynamic material with fluid animations and morphing transitions
 - 📱 **Tab Navigation**: Clean tab interface with selection indicators
 - ⚡ **Action Buttons**: Contextual action buttons that change per tab
-- 🔍 **Search Integration**: Optional search functionality with animations
+- 🔍 **Search Integration**: Optional search functionality with smooth morphing animations
 - 🎨 **Customizable**: Fully customizable icons, titles, and actions
-- ✨ **Smooth Animations**: Spring-based animations throughout
+- ✨ **Smooth Animations**: Liquid Glass morphing and spring-based animations throughout
+- 💎 **Interactive Glass**: Buttons react to touch and pointer interactions in real time
 
 ## Installation
 
@@ -165,9 +166,43 @@ Check out `FATBarExampleView` for a complete implementation example that demonst
 - Search functionality enabled for specific tabs
 - Smooth animations and transitions
 
+## iOS Version Compatibility
+
+FATBar supports iOS 15.0 and later, with enhanced visual effects on newer iOS versions:
+
+### iOS 26+ (Liquid Glass Effects)
+On iOS 26 and later, FATBar leverages Apple's advanced Liquid Glass effects for a premium visual experience:
+- **Dynamic Glass Material**: Components use `.glassEffect()` for depth and fluidity
+- **Interactive Feedback**: Buttons respond to touch with glass-style animations
+- **Smooth Morphing**: Search bar transitions with seamless morphing effects
+- **System Integration**: Blends naturally with iOS 26+ design language
+
+### iOS 15-18 (Fallback UI)
+On iOS 15 through iOS 18, FATBar provides a polished fallback experience:
+- **Ultra-Thin Material**: Uses `.ultraThinMaterial` for blur effects
+- **Standard Animations**: Smooth spring-based animations and transitions
+- **Consistent Layout**: Identical component structure and spacing
+- **Full Functionality**: All features work identically across all iOS versions
+
+The version detection happens automatically at runtime—no conditional code needed in your app.
+
+## Liquid Glass Implementation
+
+FATBar leverages Apple's Liquid Glass effects introduced in iOS 26 to provide a dynamic and fluid user experience:
+
+- **Version-Aware Rendering**: Automatically detects iOS version and applies appropriate visual effects
+- **Glass Effect Backgrounds**: Search bar and main container use `.glassEffect()` on iOS 26+
+- **Fallback Materials**: Uses `.ultraThinMaterial` on iOS 15-18 for similar blur effects
+- **Optimized Performance**: Proper spacing and effect grouping ensure smooth rendering
+
+The implementation follows Apple's best practices, ensuring seamless integration with the overall design language while maintaining backward compatibility.
+
 ## Requirements
 
 - iOS 15.0+
+- macOS 12.0+
+- tvOS 15.0+
+- watchOS 8.0+
 - Swift 5.5+
 
 ## Contributing
