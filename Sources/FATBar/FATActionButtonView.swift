@@ -1,9 +1,3 @@
-//
-//  FATActionButtonView.swift
-//  FATBar
-//
-//  Created by Leonardo Quintero on 29/06/2025.
-//
 import SwiftUI
 
 struct FATActionButtonView: View {
@@ -28,7 +22,9 @@ struct FATActionButtonView: View {
                 width: button.isWide ? wideButtonWidth : buttonSize,
                 height: buttonSize
             )
+            .contentShape(Rectangle())  // Ensure entire frame is tappable
         }
         .buttonStyle(ScaledButtonStyle())
+        .allowsHitTesting(true)  // Explicitly enable hit testing
     }
 }

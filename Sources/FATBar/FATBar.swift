@@ -79,8 +79,10 @@ public struct FATBar: View {
                                     .font(.system(size: 18, weight: .medium))
                                     .foregroundColor(.primary)
                                     .frame(width: buttonSize, height: buttonSize)
+                                    .contentShape(Rectangle())  // Ensure entire frame is tappable
                             }
                             .buttonStyle(ScaledButtonStyle())
+                            .allowsHitTesting(true)  // Explicitly enable hit testing
                         }
                         
                         // Action Buttons

@@ -23,6 +23,7 @@ struct FATTabButton: View {
             }
             .foregroundColor(isSelected ? .accentColor : .secondary)
             .frame(width: buttonSize, height: buttonSize)
+            .contentShape(Rectangle())  // Ensure entire frame is tappable
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(isSelected ? Color.accentColor.opacity(0.15) : Color.clear)
@@ -30,5 +31,6 @@ struct FATTabButton: View {
             )
         }
         .buttonStyle(ScaledButtonStyle())
+        .allowsHitTesting(true)  // Explicitly enable hit testing
     }
 }

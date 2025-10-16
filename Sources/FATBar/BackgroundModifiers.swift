@@ -4,7 +4,7 @@ import SwiftUI
 
 /// ViewModifier that applies version-appropriate background to the search bar.
 /// - iOS 26+: Uses `.glassEffect()` for Liquid Glass appearance
-/// - iOS 15-25: Uses `.ultraThinMaterial` for blur effect fallback
+/// - iOS 15-18: Uses `.ultraThinMaterial` for blur effect fallback
 struct SearchBarBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, *) {
@@ -19,13 +19,19 @@ struct SearchBarBackgroundModifier: ViewModifier {
 }
 
 /// ViewModifier that applies version-appropriate background to the main container.
-/// - iOS 26+: Uses `.glassEffect()` for Liquid Glass appearance
-/// - iOS 15-25: Uses `.ultraThinMaterial` with shadow for depth
+/// - iOS 26+: Uses `.glassEffect()` for Liquid Glass appearance with proper layering
+/// - iOS 15-18: Uses `.ultraThinMaterial` with shadow for depth
 struct MainContainerBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, *) {
-            // iOS 26+: Liquid Glass effect
-            content.glassEffect(.regular, in: .rect(cornerRadius: 24))
+            // iOS 26+: Apply glass effect as background
+            content
+                .background {
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(.clear)
+                        .glassEffect(.regular, in: .rect(cornerRadius: 24))
+                }
+                .compositingGroup()  // Ensure proper layering
         } else {
             // iOS 15-25: Fallback with ultraThinMaterial and shadow for depth
             content
