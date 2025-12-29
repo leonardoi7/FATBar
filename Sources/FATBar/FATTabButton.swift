@@ -7,17 +7,23 @@ struct FATTabButton: View {
     let tab: FATTabItem
     let isSelected: Bool
     let action: () -> Void
-    private let buttonSize: CGFloat = 44
-    
+    private let buttonSize: CGFloat = 52
+
     var body: some View {
         Button(action: action) {
             VStack(spacing: 4) {
                 Image(systemName: tab.icon)
-                    .font(.system(size: 20, weight: isSelected ? .semibold : .medium))
+                    .font(.system(size: 22, weight: isSelected ? .semibold : .medium))
                     .symbolVariant(isSelected ? .fill : .none)
                     .animation(.easeInOut(duration: 0.2), value: isSelected)
-                
-                if isSelected {
+
+                if tab.showLabel {
+                    Text(tab.title)
+                        .font(.system(size: 10, weight: isSelected ? .semibold : .medium))
+                        .lineLimit(1)
+                        .opacity(isSelected ? 1 : 0.7)
+                        .animation(.easeInOut(duration: 0.2), value: isSelected)
+                } else if isSelected {
                     Circle()
                         .fill(Color.accentColor)
                         .frame(width: 5, height: 5)
@@ -26,14 +32,14 @@ struct FATTabButton: View {
             }
             .foregroundColor(isSelected ? .accentColor : .secondary)
             .frame(width: buttonSize, height: buttonSize)
-            .contentShape(Rectangle())  // Ensure entire frame is tappable
+            .contentShape(Rectangle())
             .background(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 14)
                     .fill(isSelected ? Color.accentColor.opacity(0.15) : Color.clear)
                     .animation(.easeInOut(duration: 0.2), value: isSelected)
             )
         }
         .buttonStyle(ScaledButtonStyle())
-        .allowsHitTesting(true)  // Explicitly enable hit testing
+        .allowsHitTesting(true)
     }
 }

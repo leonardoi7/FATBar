@@ -5,15 +5,15 @@ import SwiftUI
 /// Button interactions and animations work consistently on all platforms.
 struct FATActionButtonView: View {
     let button: FATActionButton
-    private let buttonSize: CGFloat = 44
-    private let wideButtonWidth: CGFloat = 88
-    
+    private let buttonSize: CGFloat = 52
+    private let wideButtonWidth: CGFloat = 96
+
     var body: some View {
         Button(action: button.action) {
             HStack(spacing: 6) {
                 Image(systemName: button.icon)
-                    .font(.system(size: 18, weight: .medium))
-                
+                    .font(.system(size: 20, weight: .medium))
+
                 if button.isWide, let title = button.title {
                     Text(title)
                         .font(.system(size: 14, weight: .medium))
@@ -25,9 +25,9 @@ struct FATActionButtonView: View {
                 width: button.isWide ? wideButtonWidth : buttonSize,
                 height: buttonSize
             )
-            .contentShape(Rectangle())  // Ensure entire frame is tappable
+            .contentShape(Rectangle())
         }
         .buttonStyle(ScaledButtonStyle())
-        .allowsHitTesting(true)  // Explicitly enable hit testing
+        .allowsHitTesting(true)
     }
 }

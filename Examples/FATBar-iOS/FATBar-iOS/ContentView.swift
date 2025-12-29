@@ -16,10 +16,10 @@ struct ContentView: View {
     
     var tabs: [FATTabItem] {
         [
-            FATTabItem(icon: "house.fill", title: "Home", view: HomeView(viewModel: homeViewModel, searchText: searchText)),
-            FATTabItem(icon: "square.grid.2x2.fill", title: "Browse", view: BrowseView(viewModel: browseViewModel, searchText: searchText)),
-            FATTabItem(icon: "heart.fill", title: "Favorites", view: FavoritesView(viewModel: favoritesViewModel)),
-            FATTabItem(icon: "person.fill", title: "Profile", view: ProfileView(viewModel: profileViewModel))
+            FATTabItem(icon: "house.fill", title: "Home", view: HomeView(viewModel: homeViewModel, searchText: searchText), showLabel: true),
+            FATTabItem(icon: "square.grid.2x2.fill", title: "Browse", view: BrowseView(viewModel: browseViewModel, searchText: searchText), showLabel: true),
+            FATTabItem(icon: "heart.fill", title: "Favorites", view: FavoritesView(viewModel: favoritesViewModel), showLabel: true),
+            FATTabItem(icon: "person.fill", title: "Profile", view: ProfileView(viewModel: profileViewModel), showLabel: true)
         ]
     }
     

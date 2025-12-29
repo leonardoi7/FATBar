@@ -20,9 +20,9 @@ public struct FATBar: View {
     @State private var isSearchVisible = false
     @State private var searchBarOpacity: Double = 0
     
-    private let buttonSize: CGFloat = 44
-    private let wideButtonWidth: CGFloat = 88
-    private let spacing: CGFloat = 8
+    private let buttonSize: CGFloat = 52
+    private let wideButtonWidth: CGFloat = 96
+    private let spacing: CGFloat = 10
     
     /// Creates a new floating action tab bar.
     /// - Parameters:
